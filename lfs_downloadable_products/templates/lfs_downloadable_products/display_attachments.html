@@ -1,5 +1,5 @@
 {% load i18n %}
 <h1 style="padding-bottom:10px">{% trans "Your Downloads" %}</h1>
 {% for url in urls %}
-    <a href="http://localhost:8000{% url dp_download_product_attachment url.url %}">{{ url.attachment.get_filename }}</a>
+    <a href="http://{{ domain }}{% url dp_download_product_attachment url.url %}">{{ url.attachment.get_filename }}</a>
 {% endfor %}

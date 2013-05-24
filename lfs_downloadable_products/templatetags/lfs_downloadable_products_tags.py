@@ -1,4 +1,5 @@
 # django imports
+from django.contrib.sites.models import Site
 from django.template import Library
 from django.utils.safestring import mark_safe
 
@@ -23,4 +24,8 @@ def downloadable_attachments(context, order):
         if url.attachment.id not in exists:
             urls.append(url)
         exists[url.attachment.id] = 1
-    return {"urls" : urls}
+
+    return {
+        "urls": urls,
+        "domain": Site.objects.get_current().domain,
+    }
