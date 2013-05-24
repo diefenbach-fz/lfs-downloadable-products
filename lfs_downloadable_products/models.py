@@ -54,11 +54,6 @@ class ProductAttachment(models.Model):
         except:
             return name
 
-    def get_url(self):
-        if self.file.url:
-            return self.file.url
-        return None
-
 
 class ProductUrl(models.Model):
     """
