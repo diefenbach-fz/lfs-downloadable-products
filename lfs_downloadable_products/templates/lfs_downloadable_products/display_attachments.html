@@ -1,0 +1,3 @@
+{% for url in urls %}
+    <a href="http://localhost:8000{% url dp_download_product_attachment url.url %}">{{ url.attachment.get_filename }}</a>
+{% endfor %}
