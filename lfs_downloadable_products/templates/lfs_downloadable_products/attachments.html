@@ -24,6 +24,9 @@
                 <th class="small">
                     {% trans 'Preview' %}
                 </th>
+                <th class="small">
+                    {% trans 'Preview Title' %}
+                </th>
                 <th class="right-padding">
                     {% trans 'Position' %}
                 </th>
@@ -46,10 +49,13 @@
                         <textarea name="description-{{ attachment.id }}">{{ attachment.description }}</textarea>
                     </td>
                     <td>
-                        {% if attachment.image %}
-                            <img width="100px" src="{{ MEDIA_URL }}{{ attachment.image }}" />
+                        {% if attachment.preview %}
+                            <span>{{ attachment.get_preview_filename }}</span>
                         {% endif %}
-                        <input type="file" name="image-{{ attachment.id }}" />
+                        <input type="file" name="preview-{{ attachment.id }}" />
+                    </td>
+                    <td>
+                        <input type="text" name="preview-title-{{ attachment.id }}" value="{{ attachment.preview_title }}" style="width:300px" />
                     </td>
                     <td class="right-padding">
                         <input type="text" name="position-{{ attachment.id }}" value="{{ attachment.position }}" size="3" />

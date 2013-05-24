@@ -20,7 +20,7 @@ class ProductAttachment(models.Model):
     description
         The description of the attachment
 
-    file
+    preview
         The downloadable file of the attachment
 
     product
@@ -29,11 +29,12 @@ class ProductAttachment(models.Model):
     position
         The position of the attachment within a product.
     """
+    product = models.ForeignKey(Product, verbose_name=_(u"Product"), related_name="downloadable_attachments")
     title = models.CharField(_(u"Title"), max_length=50)
     description = models.TextField(_(u"Description"), blank=True)
     file = models.FileField(upload_to="downloadable_products")
-    image = models.FileField(upload_to="downloadable_products/previews")
-    product = models.ForeignKey(Product, verbose_name=_(u"Product"), related_name="downloadable_attachments")
+    preview = models.FileField(upload_to="downloadable_products/previews")
+    preview_title = models.CharField(_(u"Preview Title"), max_length=50)
     position = models.IntegerField(_(u"Position"), default=1)
 
     class Meta:
@@ -47,6 +48,21 @@ class ProductAttachment(models.Model):
             name = self.file.name.split("/")[-1]
         except (IndexError, AttributeError):
             name = self.file.name
+
+        # "HTTP response headers must be in US-ASCII format"
+        try:
+            return name.encode("utf-8")
+        except:
+            return name
+
+    def get_preview_filename(self):
+        """
+        Returns the plain filename (without any path information)
+        """
+        try:
+            name = self.preview.name.split("/")[-1]
+        except (IndexError, AttributeError):
+            name = self.preview.name
 
         # "HTTP response headers must be in US-ASCII format"
         try:

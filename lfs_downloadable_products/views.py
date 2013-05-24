@@ -5,6 +5,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.http import HttpResponse
@@ -109,11 +110,11 @@ def update_attachments(request, product_id):
             attachment.title = request.POST.get("title-%s" % attachment.id)
             attachment.position = request.POST.get("position-%s" % attachment.id)
             attachment.description = request.POST.get("description-%s" % attachment.id)
-            from django.core.files.base import ContentFile
-            image = request.FILES.get("image-%s" % attachment.id)
-            if image:
-                cf_1 = ContentFile(image.read())
-                attachment.image.save(image.name, cf_1)
+            attachment.preview_title = request.POST.get("preview-title-%s" % attachment.id)
+            preview = request.FILES.get("preview-%s" % attachment.id)
+            if preview:
+                cf_1 = ContentFile(preview.read())
+                attachment.preview.save(preview.name, cf_1)
 
             attachment.save()
 

@@ -20,3 +20,6 @@ msgstr ""
 #: templates/lfs_downloadable_products/display_attachments.html:2
 msgid "Your Downloads"
 msgstr "Ihre Downloads"
+
+msgid "Preview Title"
+msgstr "Titel Vorschau"
